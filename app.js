@@ -1,7 +1,7 @@
-var app = angular.module('floydNews', []);
+var app = angular.module('floydNews', ['ui.router']);
 
-app.controller('MainCtrl', [
-'$scope', function($scope){
+app.controller('MainCtrl', ['$scope', 'posts',
+function($scope, posts  ){
   $scope.test = 'Hello world!'; 
  
 $scope.posts = [//#1
@@ -18,13 +18,34 @@ $scope.addPost = function() {//#2
                        link: $scope.link,
                        upvotes: 0
     });
+    $scope.posts.posts.posts;  
     $scope.title ='';
     $scope.link ="";
     
-};       
+};   
+  
 $scope.incrementUpvotes = function (p) {
 p.upvotes += 1;
-}
- 
+};
+ }]);
+ app.factory('posts',[function(){
+     var o = {
+         posts: []
+     };
+     return o;
+ }]); 
+app.config([
+  '$stateProvider',
+  '$urlRouterProvider',
+    function($stateProvider, $urlRouterProvider) {
+     
+        $stateProvider
+         .state('home', {
+          url: '/home',
+          templateurl: '/home.html',
+          controller: 'MainCtrl'
+        });
+        $urlRouterProvider.otherwise('home');
+    }//} remove this extr bracket???
     
-}]);
+]);     
