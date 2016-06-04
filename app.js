@@ -42,7 +42,7 @@ app.config([
         $stateProvider
          .state('home', {
           url: '/home',
-          templateurl: '/home.html',
+          templateUrl: '/home.html',
           controller: 'MainCtrl'
         });
         $urlRouterProvider.otherwise('home');
