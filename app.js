@@ -3,7 +3,7 @@ var app = angular.module('floydNews', ['ui.router']);
 app.controller('MainCtrl', ['$scope', 'posts',
 function($scope, posts  ){
   $scope.test = 'Hello world!'; 
- 
+
 $scope.posts = [//#1
   {title : 'post 1', upvotes : 5},
   {title : 'post 2', upvotes : 2},
@@ -14,10 +14,14 @@ $scope.posts = [//#1
 $scope.addPost = function() {//#2
     //#4
     if(!$scope.title || $scope.title === '') {return;}
-    $scope.posts.push({title: $scope.title,
+    $scope.posts.push({
+                       title: $scope.title,
                        link: $scope.link,
-                       upvotes: 0
-    });
+                       upvotes: 0,
+                       comments: [
+                      {author: 'Joe', body: 'Cool post!', upvotes:0},
+                     {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes:0}
+                       ]});
     $scope.posts.posts.posts;  
     $scope.title ='';
     $scope.link ="";
@@ -28,6 +32,16 @@ $scope.incrementUpvotes = function (p) {
 p.upvotes += 1;
 };
  }]);
+
+app.controller('PostsCtrl', [
+    '$scope',
+    '$stateParams',
+    'posts',
+    function($scope, $stateParams, posts){
+        
+        
+    }]);
+
  app.factory('posts',[function(){
      var o = {
          posts: []
@@ -44,8 +58,13 @@ app.config([
           url: '/home',
           templateUrl: '/home.html',
           controller: 'MainCtrl'
+        }) 
+       
+        .state('posts', {
+        url: '/posts/{id}', 
+        templateUrl: '/posts.html',
+        controller: 'PostsCtrl'    
         });
-        $urlRouterProvider.otherwise('home');
-    }//} remove this extr bracket???
-    
+                
+     $urlRouterProvider.otherwise('home');
 ]);     
